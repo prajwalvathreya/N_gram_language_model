@@ -2,10 +2,6 @@ from collections import Counter
 import numpy as np
 import math
 
-"""
-CS6120 Homework 2 - starter code
-"""
-
 # constants
 SENTENCE_BEGIN = "<s>"
 SENTENCE_END = "</s>"
@@ -21,7 +17,7 @@ def create_ngrams(tokens: list, n: int) -> list:
   Returns:
     list: list of tuples of strings, each tuple being one of the individual n-grams
   """
-  # STUDENTS IMPLEMENT 
+
   n_grams = []
   
   for i in range(len(tokens) - n + 1):
@@ -39,7 +35,7 @@ def read_file(path: str) -> list:
   Returns:
     list: list of strings, the contents of the file
   """
-  # PROVIDED
+  
   f = open(path, "r", encoding="utf-8")
   contents = f.readlines()
   f.close()
@@ -65,7 +61,7 @@ def tokenize_line(line: str, ngram: int,
   Returns:
     list of strings - a single line tokenized
   """
-  # PROVIDED
+  
   inner_pieces = None
   if by_char:
     inner_pieces = list(line)
@@ -100,7 +96,7 @@ def tokenize(data: list, ngram: int,
   Returns:
     list of strings - all lines tokenized as one large list
   """
-  # PROVIDED
+  
   total = []
   # also glue on sentence begin and end items
   for line in data:
@@ -120,7 +116,7 @@ class LanguageModel:
     Args:
       n_gram (int): the n-gram order of the language model to create
     """
-    # STUDENTS IMPLEMENT
+    
     self.n_gram = n_gram
     self.n_grams_count = Counter()  # number of n grams in our model
     self.n_1_grams_count = Counter() # number of n - 1 grams in our model
@@ -138,7 +134,7 @@ class LanguageModel:
       tokens (list): tokenized data to be trained on as a single list
       verbose (bool): default value False, to be used to turn on/off debugging prints
     """
-    # STUDENTS IMPLEMENT
+    
     n = self.n_gram
     
     token_count = Counter(tokens)
@@ -289,7 +285,7 @@ class LanguageModel:
     Returns:
       list: a list containing lists of strings, one per generated sentence
     """
-    # PROVIDED
+    
     return [self.generate_sentence() for i in range(n)]
 
   def perplexity(self, sequence: list) -> float:
@@ -315,32 +311,24 @@ class LanguageModel:
 
 if __name__ == '__main__':
 
-  # Testing basic working and stuff
   # init language model
   n_val = 3
   model = LanguageModel(n_val)
 
   # train
-  contents = read_file(r'training_files/berp-training.txt')
-  tokens = tokenize(contents, n_val, False)
-
-  # test
-  test_path = "testing_files/berp-test.txt"
-  test_data = read_file(test_path)
-
-  test_data = test_data[:20]
-  test_tokens = tokenize(test_data, n_val, False)
-
-  # train
+  train_data = read_file(r'training_files/berp-training.txt')
+  tokens = tokenize(train_data, n_val, False)
   model.train(tokens)
 
+  # test
+  test_data = read_file(r'testing_files/berp-test.txt')
+  test_tokens = tokenize(test_data, n_val, False)
+
+  print("Score:")
+  print(model.score(test_tokens))
+
+  print("Perplexity:")
   print(model.perplexity(test_tokens))
 
-  # # print(model.score(tokenize_line("apples are fruit", 2, False)))
-  # # print(model.score(tokenize_line("distance does not matter", 2, False)))
-
-  # sents = model.generate(10)
-
-  # for sent in sents:
-  #   print(sent)
-  #   print()
+  print("Generated Sentences:")
+  print(model.generate(5))
