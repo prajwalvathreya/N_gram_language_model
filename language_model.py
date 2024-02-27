@@ -312,7 +312,7 @@ class LanguageModel:
 if __name__ == '__main__':
 
   # init language model
-  n_val = 3
+  n_val = 5
   model = LanguageModel(n_val)
 
   # train
@@ -323,12 +323,16 @@ if __name__ == '__main__':
   # test
   test_data = read_file(r'testing_files/berp-test.txt')
   test_tokens = tokenize(test_data, n_val, False)
+  test_tokens = test_tokens[0:100]
 
   print("Score:")
-  print(model.score(test_tokens))
+  print(model.score(tokenize_line("apples are fruit", 2, False)))
 
   print("Perplexity:")
   print(model.perplexity(test_tokens))
 
   print("Generated Sentences:")
-  print(model.generate(5))
+  sents = model.generate(10)
+  for i, sentence in enumerate(sents, start=1):
+    formatted_sentence = ' '.join(sentence).replace('<s>', '').replace('</s>', '').strip()
+    print(f"Sentence {i}: {formatted_sentence}")
