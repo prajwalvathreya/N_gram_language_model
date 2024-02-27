@@ -25,6 +25,10 @@ This Python script implements a language model using n-grams. The script provide
 3. Update the file paths in the script to point to your training and testing data.
 4. Run the script using `python language_model.py`.
 
+## Examples
+![Generated Sentences](examples/gen_sentences.png)
+
+
 ## Additional Notes
 - The script provides options for adjusting n-gram order and tokenization method (character-level or word-level).
 - Performance can be further optimized, especially for large datasets, by implementing more efficient algorithms for n-gram creation and probability calculation.
