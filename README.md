@@ -1,5 +1,8 @@
 # N-Gram Language Model
 
+## Objective
+This project contains the implementation of a language model using n-grams. The language model is trained on text data and provides functionality for scoring sequences of tokens, calculating perplexity. The sentence generation is based on probability and utilizes the Shannon technique.
+
 ## Overview
 This Python script implements a language model using n-grams. The script provides functionality for training the model on text data, scoring sequences of tokens, calculating perplexity, and generating sentences based on the trained model.
 
